@@ -29,47 +29,7 @@ angular.module('adf', ['adf.provider', 'adf.locale', 'ui.bootstrap'])
   .value('adfTemplatePath', '../src/templates/')
   .value('rowTemplate', '<adf-dashboard-row row="row" adf-model="adfModel" options="options" edit-mode="editMode" ng-repeat="row in column.rows" />')
   .value('columnTemplate', '<adf-dashboard-column column="column" adf-model="adfModel" options="options" edit-mode="editMode" ng-repeat="column in row.columns" />')
-  .value('adfVersion', '0.13.0-SNAPSHOT');
-
-/*
-* The MIT License
-*
-* Copyright (c) 2015, Sebastian Sdorra
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-* SOFTWARE.
-*/
-
-
-/* global angular */
-angular.module('adf')
-  .filter('adfOrderByObjectKey', ["$filter", function($filter) {
-    
-
-    return function(item, key){
-      var array = [];
-      angular.forEach(item, function(value, objectKey){
-        value[key] = objectKey;
-        array.push(value);
-      });
-      return $filter('orderBy')(array, key);
-    };
-  }]);
+  .value('adfVersion', '0.12.3');
 
 
 /*
@@ -487,6 +447,46 @@ angular.module('adf')
   }]);
 
 /*
+* The MIT License
+*
+* Copyright (c) 2015, Sebastian Sdorra
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
+
+
+/* global angular */
+angular.module('adf')
+  .filter('adfOrderByObjectKey', ["$filter", function($filter) {
+    
+
+    return function(item, key){
+      var array = [];
+      angular.forEach(item, function(value, objectKey){
+        value[key] = objectKey;
+        array.push(value);
+      });
+      return $filter('orderBy')(array, key);
+    };
+  }]);
+
+/*
  * The MIT License
  *
  * Copyright (c) 2015, Sebastian Sdorra
@@ -561,13 +561,6 @@ angular.module('adf')
             definition.titleTemplateUrl = adfTemplatePath + 'widget-title.html';
             if (w.titleTemplateUrl) {
               definition.titleTemplateUrl = w.titleTemplateUrl;
-            }
-          }
-
-          if (!definition.editTemplateUrl) {
-            definition.editTemplateUrl = adfTemplatePath + 'widget-edit.html';
-            if (w.editTemplateUrl) {
-              definition.editTemplateUrl = w.editTemplateUrl;
             }
           }
 
@@ -764,40 +757,6 @@ angular.module('adf')
       $scope.$on('adfDashboardCollapseExpand', function(event, args) {
         $scope.widgetState.isCollapsed = args.collapseExpandStatus;
       });
-
-      $scope.$on('adfWidgetEnterEditMode', function(event, widget){
-        if (dashboard.idEquals($scope.definition.wid, widget.wid)){
-          $scope.edit();
-        }
-      });
-
-      $scope.widgetClasses = function(w, definition){
-        var classes = definition.styleClass || '';
-        // w is undefined, if the type of the widget is unknown
-        // see issue #216
-        if (!w || !w.frameless || $scope.editMode){
-          classes += ' panel panel-default';
-        }
-        return classes;
-      };
-
-      $scope.openFullScreen = function() {
-        var definition = $scope.definition;
-        var fullScreenScope = $scope.$new();
-        var opts = {
-          scope: fullScreenScope,
-          templateUrl: adfTemplatePath + 'widget-fullscreen.html',
-          size: definition.modalSize || 'lg', // 'sm', 'lg'
-          backdrop: 'static',
-          windowClass: (definition.fullScreen) ? 'dashboard-modal widget-fullscreen' : 'dashboard-modal'
-        };
-
-        var instance = $uibModal.open(opts);
-        fullScreenScope.closeDialog = function() {
-          instance.close();
-          fullScreenScope.$destroy();
-        };
-      };
     }
 
   }]);
