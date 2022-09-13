@@ -1,11 +1,12 @@
 # [Unreleased]
-
-# 0.12.1 - 2022-09-13
+# 0.12.5 - 2022-09-13
 ## Fixed
 * title and description of widgets are fully visible when adding new widgets
 
-# 0.12.2
+# 0.12.4 - 2022-09-13
+## This release was removed as it contained an error.
 
+# 0.12.2
 ## Enhancements
 * improve accessibility [#339](https://github.com/angular-dashboard-framework/angular-dashboard-framework/issues/339)
 
