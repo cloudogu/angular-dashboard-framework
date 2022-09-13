@@ -1,5 +1,8 @@
 # [Unreleased]
 
+## Fixed
+* title and description of widgets are fully visible when adding new widgets
+
 # 0.12.2
 
 ## Enhancements
