@@ -1,5 +1,6 @@
 # [Unreleased]
 
+# 0.12.1 - 2022-09-13
 ## Fixed
 * title and description of widgets are fully visible when adding new widgets
 
